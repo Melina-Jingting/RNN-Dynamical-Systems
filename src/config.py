@@ -1,4 +1,8 @@
 import jax 
+import os
+
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+SAVED_MODELS_FOLDER_SUBPATH = "saved_models"
 
 def get_run_config(seed=42, n_bits=3):
     """Initialize random keys and other run-specific settings."""
