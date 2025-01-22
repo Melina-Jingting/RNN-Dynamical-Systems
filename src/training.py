@@ -22,7 +22,7 @@ def make_step(model, optim, input, target, dt, opt_state):
     return loss, model, opt_state
 
 
-def train_model(model, iter_data, optim, opt_state, model_id, dt=0.1, n_training_steps=10000, log_every=1000):
+def train_model(model, iter_data, optim, opt_state, model_id, dt=0.1, n_training_steps=10000, log_every=100):
     """Run the training loop."""
 
     save_dir = f"saved_models/{model_id}"
@@ -38,7 +38,6 @@ def train_model(model, iter_data, optim, opt_state, model_id, dt=0.1, n_training
         loss, model, opt_state = make_step(model, optim, input, target, dt, opt_state)
         loss = loss.item()
         if step % log_every == 0:
-            print(f"step={step}, loss={loss}")
             save_loss(model_id, step, loss)
             save_model(model_id, model)
 

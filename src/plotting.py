@@ -54,7 +54,7 @@ def plot_examples(ntimesteps, rnn_internals, key, nexamples=1):
   plt.plot(0,0, 'k', label='Target')
   fig.legend(loc=[.91,.1])
 
-def plot_dts_experiment(models, dts, input_coarse, target_coarse, T, n_neurons, plot_input=True, plot_dynamics=True, plot_output=True):
+def plot_dts_experiment(models, dts, input_coarse, target_coarse, T, n_neurons, model_names=None, plot_input=True, plot_dynamics=True, plot_output=True):
   """Plot some input/hidden/output triplets."""
   n_rows = int(plot_input) + int(n_neurons) + int(plot_output)
   n_columns = len(models)
@@ -101,7 +101,7 @@ def plot_dts_experiment(models, dts, input_coarse, target_coarse, T, n_neurons, 
                     )
         plt.xlim([0, T])
         if midx == 0:
-          plt.ylabel(f'Hidden (nidx)')
+          plt.ylabel(f'Hidden unit {nidx}')
   
 
       # Plot outputs

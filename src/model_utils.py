@@ -35,8 +35,8 @@ def generate_model_id(metadata):
   return model_id
 
 def check_model_exists(model_id, folder_path="saved_models"):
-  os.path.join(folder_path, model_id, "model.eqx")
-  return os.path.exists("model.eqx")
+  model_path = os.path.join(folder_path, model_id, "model.eqx")
+  return os.path.exists(model_path)
 
 def save_model_metadata(metadata, model_id, metadata_filename="metadata.json", model_filename="model.eqx", folder_path="saved_models"):
   """
