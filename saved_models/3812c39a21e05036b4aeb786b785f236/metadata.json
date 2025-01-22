@@ -1,0 +1,26 @@
+{
+    "config": {
+        "seed": 42,
+        "n_bits": 3
+    },
+    "model_hyperparameters": {
+        "n_input": 3,
+        "n_hidden": 100,
+        "n_output": 3,
+        "h0_scale": 0.1,
+        "wIn_factor": 1.0,
+        "wRec_factor": 0.9,
+        "wOut_factor": 1.0,
+        "tau": 1.0
+    },
+    "data_hyperparameters": {
+        "n_bits": 3,
+        "n_coarse_steps": 25,
+        "upsampling_rate": 3,
+        "p_ticks": 0.333,
+        "batch_size": 256
+    },
+    "optimizer_hyperparameters": {
+        "learning_rate": 0.003
+    }
+}
