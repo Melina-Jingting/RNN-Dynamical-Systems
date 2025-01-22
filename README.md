@@ -1,19 +1,17 @@
 # N-Bit Memory Task with JAX and Equinox
 
 ## Overview
-This project implements and trains a continuous-time recurrent neural network (RNN) to solve varying tasks.
+This repo compiles my work evaluating dynamical systems on RNNs trained on various tasks
 
-## Tasks
-The models are trained with varying time resolutions (`dts`) and evaluated to compare their performance.
+## Experiments so far:
+1. 3BitFF-dt-experiment.ipynb: The models are trained with varying time resolutions (`dts`) and evaluated on data with varying time resolutions (`dts`). We observe interesting dynamics when the model is trained on high resolution data and used to evaluate low resolution data.
 
 ## Directory Structure
 - `src/`: Source code for data generation, model utilities, training, and plotting.
 - `experiments/`: Experiment scripts and notebooks.
-- `tests/`: Unit tests for various components.
-- `saved_models/`: Directory for storing trained models and metadata (ignored by `.gitignore`).
+- `saved_models/`: Directory for storing trained models and metadata. The models are saved with unique `model_id` which is a hash of the metadata.
+   - `{model_id}/`: 
+      - `metadata.json`: Stores model hyperparameters, data hyperparameters and optimizer hyperparameters.
+      - `model.eqx`: Model parameters
+      - `loss.csv`: If the model has been trained, logs the training loss and the training step which the loss was recorded.
 
-## Setup
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-repo/nbit-memory-task.git
-   cd nbit-memory-task

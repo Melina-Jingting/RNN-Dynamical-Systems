@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import matplotlib.cm as cm
 import numpy as np 
 import jax
 
@@ -58,7 +57,7 @@ def plot_dts_experiment(models, dts, input_coarse, target_coarse, T, n_neurons, 
   """Plot some input/hidden/output triplets."""
   n_rows = int(plot_input) + int(n_neurons) + int(plot_output)
   n_columns = len(models)
-  colormap = cm.get_cmap('viridis', len(dts))
+  colormap = plt.get_cmap('viridis', len(dts))
   
   fig = plt.figure(figsize=(n_columns*5, n_rows*3))
   input_dim = input_coarse.shape[1]
@@ -68,7 +67,7 @@ def plot_dts_experiment(models, dts, input_coarse, target_coarse, T, n_neurons, 
   for midx in range(len(models)):
     ridx = 0
     plt.subplot(n_rows, n_columns, ridx*n_columns + midx + 1)
-    plt.title(f'Model {midx+1}')
+    plt.title(f'Model {model_names[midx]}')
     model = models[midx]
     for didx, dt in enumerate(dts):
       color = colormap(didx)
@@ -79,13 +78,13 @@ def plot_dts_experiment(models, dts, input_coarse, target_coarse, T, n_neurons, 
 
       # Plot Inputs
       ridx = 0
-      if didx == len(dts)-1:
+      if didx == midx:
         expander = 3 * np.expand_dims(np.arange(input_dim), axis=0)
         plt.subplot(n_rows, n_columns, ridx*n_columns + midx + 1)
         plt.plot(np.arange(0, T, dt), input_upsampled + expander, 'k')
         plt.xlim([0, T])
         if midx == 0:
-          plt.ylabel('Input')
+          plt.ylabel('Input at training $\Delta t$')
       
 
       # Plot unit activity
@@ -114,7 +113,7 @@ def plot_dts_experiment(models, dts, input_coarse, target_coarse, T, n_neurons, 
       plt.plot(
           np.arange(0, T, dt), 
           output[:, :] + expander, 
-          linestyle='-.', 
+          linestyle='-', 
           color=color)
       if didx == len(dts)-1:
         plt.plot(np.arange(0, T, dt), target_upsampled[:, :] + expander, 'k')
@@ -127,3 +126,40 @@ def plot_dts_experiment(models, dts, input_coarse, target_coarse, T, n_neurons, 
       # plt.plot(0,0, 'm-.', label='RNN output')
       # plt.plot(0,0, 'k', label='Target')
       fig.legend(loc=[.91,.1])
+      
+      
+def plot_eigenspectra(matrices, matrix_names):
+    """
+    Plots the eigenspectra of a list of matrices side by side.
+
+    Parameters:
+    - matrices (list of np.ndarray): List of matrices to compute eigenspectra for.
+    - matrix_names (list of str): List of names for the matrices to be used in plot titles.
+    """
+    # Validate inputs
+    if len(matrices) != len(matrix_names):
+        raise ValueError("The number of matrices must match the number of matrix names.")
+
+    num_matrices = len(matrices)
+    
+    # Create subplots
+    fig, axes = plt.subplots(1, num_matrices, figsize=(6 * num_matrices, 6))
+    
+    # Ensure axes is iterable even for a single plot
+    if num_matrices == 1:
+        axes = [axes]
+    
+    # Plot eigenspectra for each matrix
+    for i, (matrix, name) in enumerate(zip(matrices, matrix_names)):
+        eigenvalues, _ = np.linalg.eig(matrix)
+        axes[i].scatter(eigenvalues.real, eigenvalues.imag, color='blue', alpha=0.7)
+        axes[i].axhline(0, color='black', linewidth=0.8, linestyle='--')  # Imaginary axis
+        axes[i].axvline(0, color='black', linewidth=0.8, linestyle='--')  # Real axis
+        axes[i].set_title(f"Eigenspectrum of {name}")
+        axes[i].set_xlabel("Real Part")
+        axes[i].set_ylabel("Imaginary Part")
+        axes[i].grid(alpha=0.3)
+
+    # Adjust layout for better spacing
+    plt.tight_layout()
+    plt.show()
