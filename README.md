@@ -1,7 +1,7 @@
 # N-Bit Memory Task with JAX and Equinox
 
 ## Overview
-This repo compiles my work evaluating dynamical systems on RNNs trained on various tasks
+This repo compiles my work evaluating dynamical systems on RNNs trained on the 3-bit memory problem
 
 ## Experiments so far:
 1. 3BitFF-dt-experiment.ipynb: The models are trained with varying time resolutions (`dts`) and evaluated on data with varying time resolutions (`dts`). We observe interesting dynamics when the model is trained on high resolution data and used to evaluate low resolution data.
